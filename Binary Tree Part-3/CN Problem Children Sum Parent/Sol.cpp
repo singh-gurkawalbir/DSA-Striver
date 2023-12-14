@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <queue>
+#include "Tree.h"
+using namespace std;
+
+void reorder(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+    int child = 0;
+    if (root->left)
+    {
+        child += root->left->val;
+    }
+    if (root->right)
+    {
+        child += root->right->val;
+    }
+
+    if (child < root->val)
+    {
+        if (root->left)
+            root->left->val = root->val;
+        else if (root->right)
+            root->right->val = root->val;
+    }
+
+    reorder(root->left);
+    reorder(root->right);
+
+    int tot = 0;
+    if (root->left)
+        tot += root->left->val;
+    if (root->right)
+        tot += root->right->val;
+    if (root->left || root->right)
+        root->val = tot;
+}
+void changeTree(TreeNode *root)
+{
+    reorder(root);
+}
